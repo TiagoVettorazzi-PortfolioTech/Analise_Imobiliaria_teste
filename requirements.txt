@@ -1,0 +1,12 @@
+scikit-learn
+pandas
+xgboost
+streamlit
+pydeck
+haversine
+StandardScaler
+joblib
+uvicorn
+fastapi
+numpy
+
