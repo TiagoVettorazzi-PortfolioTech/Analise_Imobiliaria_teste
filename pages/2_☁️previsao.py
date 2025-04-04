@@ -12,6 +12,7 @@ from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 import joblib
 from endpoint import app  
+import requests
 
 st.set_page_config(layout="wide")
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "modules")))
@@ -132,9 +133,26 @@ input_data = pd.DataFrame([inputs])
 #st.write(input_data)
 #st.write(input_data.info())
 # st.write(f'Inputs:{inputs}')
+
+
+
+# if st.sidebar.button("Fazer Previsão"):
+#     prediction = model.predict(input_data)
+#     st.write(f"## O preço estimado do imóvel é: R$ {prediction[0]:,.2f}")
+
 if st.sidebar.button("Fazer Previsão"):
-    prediction = model.predict(input_data)
-    st.write(f"## O preço estimado do imóvel é: R$ {prediction[0]:,.2f}")
+    url = "http://localhost:8000/predict"  # ou o endpoint da sua API
+    payload = input_data.to_dict(orient="records")[0]
+    payload = {k: (v.item() if hasattr(v, 'item') else v) for k, v in payload.items()}
+
+    response = requests.post(url, json=payload)
+    
+    if response.status_code == 200:
+        resultado = response.json()
+        preco_estimado = resultado.get("predicted_house_value")
+        st.write(f"## O preço estimado do imóvel é: R$ {preco_estimado:,.2f}")
+    else:
+        st.error(f"Erro ao obter previsão. Código: {response.status_code}")
 
 #if st.sidebar.button("Simular Investimento"):
 #    st.session_state.input_data = input_data

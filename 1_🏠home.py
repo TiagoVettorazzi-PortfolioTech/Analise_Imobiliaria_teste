@@ -4,9 +4,17 @@ import os
 from modules.model import load_and_train_model
 import pydeck as pdk
 from modules.model import data_frame
+import threading
+from endpoint import app as app_api
+import uvicorn
+
+def run_fastapi():
+    uvicorn.run(app_api, host="0.0.0.0", port=8000)
+
+thread = threading.Thread(target=run_fastapi)
+thread.start() 
 
 st.set_page_config(page_title="Simulador de Imóveis", layout="wide")
-
 
 #sst.sidebar.title("Menu")
 # Título principal
