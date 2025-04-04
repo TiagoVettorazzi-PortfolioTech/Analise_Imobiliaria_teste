@@ -145,7 +145,7 @@ if not os.path.exists("models"):
  
 modelo_treinado_path = 'models/modelo4.pkl'
 kmeans_path = 'models/kmeans4.pkl' 
-treinar_modelo = True
+treinar_modelo = False
  
 if treinar_modelo or not (os.path.exists(modelo_treinado_path) and os.path.exists(kmeans_path)):
     print("Treinando o modelo...")
