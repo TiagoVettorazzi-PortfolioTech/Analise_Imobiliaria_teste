@@ -74,7 +74,7 @@ def input_variaveis(numericas):
             inputs[feature] = st.sidebar.number_input(f"Valor do condomínio", value=int(media), step = 50)
         
         elif (feature == 'aream2'):
-            inputs[feature] = st.sidebar.number_input(f"Tamanho da area m²", value=int(media), step = 20)
+            inputs[feature] = st.sidebar.number_input(f"Tamanho da area m²", value=int(media), step = 10)
 
         elif (feature == 'Quartos'):
             inputs[feature] = st.sidebar.number_input(f"Quantidade de Quartos", value=int(media), step = 1)
