@@ -12,8 +12,7 @@ import pandas as pd
 app = FastAPI(title="API de Previsão de Preço de Imóvel")
 
 # Carregando o modelo treinado
-modelo = joblib.load('models/modelo3.pkl')
-
+modelo = joblib.load('models/modelo4.pkl')
 
 colunas = [
     'aream2', 'Quartos', 'banheiros', 'vagas', 'condominio', 'latitude',
