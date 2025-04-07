@@ -68,18 +68,22 @@ def input_variaveis(numericas):
     lat, lon, idh_longevidade, idh_renda, df_filtrado = selecionar_bairro(df)
      
     for feature in numericas:
+        media = df_filtrado[feature].mean()
         if (feature == 'condominio') :
             
-            inputs[feature] = st.sidebar.number_input(f"Valor do condomínio", min_value = 0.0, step = 50.0)
+            inputs[feature] = st.sidebar.number_input(f"Valor do condomínio", value=int(media), step = 50)
         
         elif (feature == 'aream2'):
-            inputs[feature] = st.sidebar.number_input(f"Tamanho da area m²", min_value = 10, step = 20)
+            inputs[feature] = st.sidebar.number_input(f"Tamanho da area m²", value=int(media), step = 20)
+
+        elif (feature == 'Quartos'):
+            inputs[feature] = st.sidebar.number_input(f"Quantidade de Quartos", value=int(media), step = 1)
+
+        elif (feature == 'banheiros'):
+            inputs[feature] = st.sidebar.number_input(f"Quantidade de Banheiros", value=int(media), step = 1)
         
-        elif (feature == 'Quartos') or (feature == 'banheiros'):
-           
-            inputs[feature] = st.sidebar.number_input(f"Quantidade de {feature}", min_value = 1, step = 1)
         elif (feature == 'vagas'):
-            inputs[feature] = st.sidebar.number_input(f"Número de {feature} na garagem ", min_value = 0, step = 1)
+            inputs[feature] = st.sidebar.number_input(f"Número de Vagas na Garagem ", value=int(media), step = 1)
         #else:
         #    # Para outras variáveis, o valor mínimo é 0.1
         #    st.write(f"Valor de {feature} ")
@@ -201,14 +205,14 @@ def mostrar_estatisticas(df_filtrado):
         st.metric("🚿 Média de Banheiros ", f"{int(df_filtrado['banheiros'].mean())}")
     
     with col3:
-        df_filtrado['preço p/m'] = df_filtrado['preco']/ df_filtrado['aream2']
+        df_filtrado['Preço p/m'] = df_filtrado['preco']/ df_filtrado['aream2']
         qntd_amostra = df_filtrado.shape[0]
-        st.metric("Média de preço por m²", f"R$ {df_filtrado['preco p/m2'].mean():.2f} ")
-        st.metric("Número de Casas disponíveis ", f"{qntd_amostra}")
+        st.metric("Média de Preço por m²", f"R$ {df_filtrado['preco p/m2'].mean():.2f} ")
+        st.metric("Número de Casas Disponíveis ", f"{qntd_amostra}")
     
     with col4:
-        st.metric("idh_renda", f"{df_filtrado['idh_renda'].mean():.2f}")
-        st.metric('idh_longevidade', f"{df_filtrado['idh_longevidade'].mean():.2f}")    
+        st.metric("IDH Renda", f"{df_filtrado['idh_renda'].mean():.2f}")
+        st.metric('IDH Longevidade', f"{df_filtrado['idh_longevidade'].mean():.2f}")    
 
 mostrar_estatisticas(df_filtrado)
 
